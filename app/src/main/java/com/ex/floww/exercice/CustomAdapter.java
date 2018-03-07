@@ -18,9 +18,9 @@ import java.util.ArrayList;
  */
  class CustomAdapter extends ArrayAdapter<Rows>  {
 
-    private ArrayList<Rows> dataSet;
+
     Context mContext;
-    
+
     // View lookup cache
     private static class ViewHolder {
         TextView title;
@@ -30,7 +30,6 @@ import java.util.ArrayList;
 
      CustomAdapter(ArrayList<Rows> data, Context context) {
         super(context, R.layout.object_row, data);
-        this.dataSet = data;
         this.mContext=context;
 
     }
@@ -41,7 +40,7 @@ import java.util.ArrayList;
         Rows dataModel = getItem(position);
 
         ViewHolder viewHolder; // view lookup cache stored in tag
-        final View result;
+
 
         if (convertView == null) {
 
@@ -51,12 +50,9 @@ import java.util.ArrayList;
             viewHolder.title = (TextView) convertView.findViewById(R.id.title);
             viewHolder.description = (TextView) convertView.findViewById(R.id.description);
             viewHolder.img = (ImageView) convertView.findViewById(R.id.url);
-            result=convertView;
-
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
-            result=convertView;
         }
 
         if (dataModel != null) {

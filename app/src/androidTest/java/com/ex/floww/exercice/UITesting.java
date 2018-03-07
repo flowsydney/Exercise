@@ -1,18 +1,30 @@
 package com.ex.floww.exercice;
 
+import android.content.Context;
 import android.content.Intent;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.annotation.UiThreadTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.test.AndroidTestCase;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.ex.floww.exercice.Objects.Rows;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.squareup.picasso.Picasso;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import static android.support.test.espresso.Espresso.onData;
@@ -31,7 +43,8 @@ import static org.hamcrest.core.IsEqual.equalTo;
  * Created by Floww on 07/03/2018.
  */
 
-public class UITesting {
+@RunWith(AndroidJUnit4.class)
+public class UITesting extends AndroidTestCase {
     private AsyncInterface apiManager;
     private final static String str = "{\n" +
             "\"title\":\"About Canada\",\n" +
@@ -108,6 +121,37 @@ public class UITesting {
             "\t}\n" +
             "]\n" +
             "}";
-    
+
+     CustomAdapter adapter;
+
+
+    @Rule
+    public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(
+            MainActivity.class);
+
+    @UiThreadTest @Test
+    public void data_test() {
+        Gson gson = new Gson();
+
+        JsonParser jsonParser = new JsonParser();
+        JsonObject jo = (JsonObject)jsonParser.parse(str);
+        ExObject object = mActivityRule.getActivity().ConstructObject(jo);
+        Context appContext = InstrumentationRegistry.getTargetContext();
+        adapter = new CustomAdapter(object.getRows(), appContext);
+
+
+        View view;
+        TextView name;
+        
+        for (int i = 0; i < adapter.getCount(); ++i){
+            view = adapter.getView(i, null, null);
+            name = (TextView) view
+                    .findViewById(R.id.title);
+            assertNotNull("View is null. ", view);
+            assertNotNull("Name TextView is null. ", name);
+            if (object.getRows().get(i).getTitle() != null)
+                assertEquals("Names doesn't match.", object.getRows().get(i).getTitle(), name.getText());
+        }
+    }
 
 }

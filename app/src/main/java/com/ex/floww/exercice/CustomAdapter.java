@@ -18,7 +18,6 @@ import java.util.ArrayList;
  */
  class CustomAdapter extends ArrayAdapter<Rows>  {
 
-
     Context mContext;
 
     // View lookup cache
@@ -31,7 +30,6 @@ import java.util.ArrayList;
      CustomAdapter(ArrayList<Rows> data, Context context) {
         super(context, R.layout.object_row, data);
         this.mContext=context;
-
     }
 
     @Override

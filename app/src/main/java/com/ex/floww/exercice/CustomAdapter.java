@@ -16,8 +16,7 @@ import java.util.ArrayList;
 /**
  * Created by Floww on 07/03/2018.
  */
-
-public class CustomAdapter extends ArrayAdapter<Rows> implements View.OnClickListener {
+ class CustomAdapter extends ArrayAdapter<Rows> implements View.OnClickListener {
 
     private ArrayList<Rows> dataSet;
     Context mContext;
@@ -65,9 +64,11 @@ public class CustomAdapter extends ArrayAdapter<Rows> implements View.OnClickLis
             result=convertView;
         }
 
-        viewHolder.title.setText(dataModel.getTitle());
-        viewHolder.description.setText(dataModel.getDescription());
-        Picasso.with(convertView.getContext().getApplicationContext()).load(dataModel.getUrl()).into(viewHolder.img);
+        if (dataModel != null) {
+            viewHolder.title.setText(dataModel.getTitle());
+            viewHolder.description.setText(dataModel.getDescription());
+            Picasso.with(convertView.getContext().getApplicationContext()).load(dataModel.getUrl()).into(viewHolder.img);
+        }
 
         // Return the completed view to render on screen
         return convertView;

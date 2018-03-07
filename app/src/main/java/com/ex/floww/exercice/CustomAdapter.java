@@ -16,16 +16,11 @@ import java.util.ArrayList;
 /**
  * Created by Floww on 07/03/2018.
  */
- class CustomAdapter extends ArrayAdapter<Rows> implements View.OnClickListener {
+ class CustomAdapter extends ArrayAdapter<Rows>  {
 
     private ArrayList<Rows> dataSet;
     Context mContext;
-
-    @Override
-    public void onClick(View view) {
-
-    }
-
+    
     // View lookup cache
     private static class ViewHolder {
         TextView title;
